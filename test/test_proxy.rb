@@ -63,4 +63,11 @@ class TestProxy < Test::Unit::TestCase
     assert_equal "bar", proxy.bar
   end
   
+  def test_method_missing
+    proxy = RetryingProxy::Proxy.new(Foo.new(2))
+    proxy.retry_method :fu, :times => 2
+    proxy(proxy.target).fu.times(3)
+    assert_equal "foo", proxy.fu
+  end
+  
 end

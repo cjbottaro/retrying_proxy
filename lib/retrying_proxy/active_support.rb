@@ -6,11 +6,6 @@ class Object #:nodoc:
     end
   end unless method_defined?(:singleton_class)
   
-  def tap
-    yield(self)
-    self
-  end unless method_defined?(:tap)
-  
 end
 
 class Module #:nodoc:

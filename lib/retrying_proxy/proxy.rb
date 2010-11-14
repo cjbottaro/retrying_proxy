@@ -43,7 +43,7 @@ module RetryingProxy
     # List of methods to pass through unaltered.
     #   proxy_methods :foo, :bar, :baz
     def proxy_methods(*args)
-      retry_methods(*args, :times => 0)
+      retry_methods(*(args + [:times => 0])) # It has to be this way for Ruby 1.8
     end
     
     alias_method :proxy_method, :proxy_methods
@@ -53,7 +53,7 @@ module RetryingProxy
       if target.respond_to?(method_name)
         target.send(method_name, *args, &block)
       else
-        target.method_missing(method_missing, *args, &block)
+        target.method_missing(method_name, *args, &block)
       end
     end
     

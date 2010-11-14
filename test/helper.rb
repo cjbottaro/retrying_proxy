@@ -38,6 +38,14 @@ class Foo
       "baz"
     end
     
+    def method_missing(method_name, *args, &block)
+      if method_name == :fu
+        foo
+      else
+        super
+      end
+    end
+    
   end
   
   include InstanceMethods
