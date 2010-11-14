@@ -1,17 +1,54 @@
 = retrying_proxy
 
-Description goes here.
+A simple gem to help you retry methods and deal with transient failures.
 
-== Note on Patches/Pull Requests
- 
-* Fork the project.
-* Make your feature addition or bug fix.
-* Add tests for it. This is important so I don't break it in a
-  future version unintentionally.
-* Commit, do not mess with rakefile, version, or history.
-  (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
-* Send me a pull request. Bonus points for topic branches.
+== Quickstart
 
-== Copyright
+Given a class that has methods that intermittently fail...
 
-Copyright (c) 2010 Christopher J. Bottaro. See LICENSE for details.
+  class Failer
+    
+    def initialize(failure_rate = 0.5)
+      @failure_rate = failure_rate
+    end
+    
+    def foo
+      if rand > @failure_rate
+        raise RuntimeError, "failure"
+      else
+        "foo"
+      end
+    end
+    
+  end
+
+You can use retrying_proxy in a few ways to deal with it...
+
+Create a retrying_proxy instance.
+
+  failer = Failer.new
+  proxy = RetryingProxy::Proxy.new(failer)
+  proxy.retry_method :foo
+  proxy.foo # Will retry once with no delay if an Exception is raised.
+
+Create a retrying_proxy class.
+
+  class FailerProxy < RetryingProxy::Base
+    proxy_target{ |failure_rate| Failer.new(failure_rate) }
+    retry_method :foo, :exceptions => RuntimeError # :exceptions can be an array.
+  end
+  proxy = FailerProxy.new(0.33)
+  proxy.foo # Will retry once with no delay if a RuntimeError is raised.
+  
+Modify the class directly.
+
+  class Failer
+    include RetryingProxy
+    retry_method :foo, :times => 2, :delay => 0.25
+  end
+  failer = Failer.new(0.75)
+  failer.foo # Will retry up to 2 times with a delay of 0.25 seconds between retries on any Exception.
+  
+== Author
+
+Christopher J. Bottaro - {cjbottaro}[http://github.com/cjbottaro]
