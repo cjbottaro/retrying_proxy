@@ -4,7 +4,7 @@ module RetryingProxy
     attr_reader :settings
     
     DEFAULTS = { :times       => 1,
-                 :exceptions  => Exception,
+                 :exceptions  => StandardError,
                  :delay       => nil,
                  :predicate   => nil }
     
@@ -50,10 +50,12 @@ module RetryingProxy
     
     # Direcly call a method on the target without any wrapping or anything.
     def raw_call(method_name, *args, &block)
-      if target.respond_to?(method_name)
+      if target.respond_to?(method_name) or \
+         target.class.private_method_defined?(method_name) or \
+         target.class.protected_method_defined?(method_name)
         target.send(method_name, *args, &block)
       else
-        target.method_missing(method_name, *args, &block)
+        target.send(:method_missing, method_name, *args, &block)
       end
     end
     

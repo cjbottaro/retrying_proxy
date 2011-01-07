@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "retrying_proxy"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{A simple gem to help you retry methods and deal with transient failures.}
+    gem.description = %Q{A simple gem to help you retry methods and deal with transient failures.}
     gem.email = "cjbottaro@alumni.cs.utexas.edu"
     gem.homepage = "http://github.com/cjbottaro/retrying_proxy"
     gem.authors = ["Christopher J. Bottaro"]

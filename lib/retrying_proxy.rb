@@ -4,6 +4,8 @@ require "retrying_proxy/proxy"
 
 module RetryingProxy
   
+  VERSION = File.read(File.dirname(__FILE__)+"/../VERSION").freeze
+  
   def self.included(mod)
     mod.send(:extend, ClassMethods)
     mod.send(:include, InstanceMethods)

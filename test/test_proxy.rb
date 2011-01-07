@@ -70,4 +70,21 @@ class TestProxy < Test::Unit::TestCase
     assert_equal "foo", proxy.fu
   end
   
+  def test_private_and_protected_methods
+    klass = Class.new do
+    private
+      def foo; "foo"; end
+    protected
+      def bar; "bar"; end
+    end
+    object = klass.new
+    proxy = RetryingProxy::Proxy.new(object)
+    proxy.retry_method :foo
+    proxy(proxy.target).foo.times(1)
+    assert_equal "foo", proxy.foo
+    proxy.proxy_method :bar
+    proxy(proxy.target).bar.times(1)
+    assert_equal "bar", proxy.bar
+  end
+  
 end
