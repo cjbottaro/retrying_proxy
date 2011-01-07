@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{retrying_proxy}
-  s.version = "0.1.0"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Christopher J. Bottaro"]
-  s.date = %q{2010-11-15}
+  s.date = %q{2011-01-07}
   s.description = %q{A simple gem to help you retry methods and deal with transient failures.}
   s.email = %q{cjbottaro@alumni.cs.utexas.edu}
   s.extra_rdoc_files = [
@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
      "lib/retrying_proxy/active_support.rb",
      "lib/retrying_proxy/base.rb",
      "lib/retrying_proxy/proxy.rb",
+     "retrying_proxy.gemspec",
      "test/helper.rb",
      "test/test_base.rb",
      "test/test_coverage.rb",
