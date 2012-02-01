@@ -7,6 +7,18 @@ module RetryingProxy
   def self.included(mod)
     mod.send(:extend, ClassMethods)
     mod.send(:include, InstanceMethods)
+
+    # Make sure inherited classes get the retrying_proxy object copied over.
+    mod.class_eval do
+      class << self
+        def inherited_with_retrying_proxy(klass)
+          inherited_without_retrying_proxy(klass)
+          klass.instance_variable_set(:@retrying_proxy, retrying_proxy.deep_clone)
+        end
+        alias_method_chain :inherited, :retrying_proxy
+      end
+    end
+
   end
   
   module ClassMethods

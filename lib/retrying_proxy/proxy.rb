@@ -12,6 +12,12 @@ module RetryingProxy
       @target = target
       @settings = {}
     end
+
+    def deep_clone
+      copy = self.class.new(target)
+      copy.instance_variable_set(:@settings, settings.dup)
+      copy
+    end
     
     def retry_methods(*args)
       # Handle options.
