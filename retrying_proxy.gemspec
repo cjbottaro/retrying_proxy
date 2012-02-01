@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version     = RetryingProxy::VERSION
   s.authors     = ["Christopher J. Bottaro"]
   s.email       = ["cjbottaro@alumni.cs.utexas.edu"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.homepage    = "https://github.com/cjbottaro/retrying_proxy"
+  s.summary     = %q{Easily retry methods to deal with transient failures}
+  s.description = %q{Implements the proxy pattern retry methods on a class/object}
 
   s.rubyforge_project = "retrying_proxy"
 
