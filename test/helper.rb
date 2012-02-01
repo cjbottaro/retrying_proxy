@@ -1,9 +1,7 @@
 require 'rubygems'
 require 'test/unit'
 
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-$LOAD_PATH.unshift(File.dirname(__FILE__))
-require 'retrying_proxy'
+require "retrying_proxy"
 require "rr"
 
 class Test::Unit::TestCase
